@@ -1,1 +1,6 @@
 .env
+gen-lang-client-0167173788-89a164555a97.json
+__pycache__/
+*.py[cod]
+.venv/
+venv/
