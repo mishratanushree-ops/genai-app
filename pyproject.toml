@@ -1,0 +1,12 @@
+[project]
+name = "genai-app"
+version = "0.1.0"
+description = "A FastAPI app for text summarization using Gemini"
+dependencies = [
+"fastapi==0.115.5",
+"pydantic==2.9.2",
+"google-genai==1.5.0",
+"uvicorn==0.30.1",
+"python-dotenv==1.0.0",
+"huggingface_hub",
+]

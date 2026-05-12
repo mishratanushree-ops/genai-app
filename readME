@@ -1,0 +1,73 @@
+Commands Executed and Changes Made
+
+Here's a summary of all the terminal commands I ran and file changes I made to get your GenAI FastAPI app running. This was necessary because `uv` (the Python package manager) wasn't installed, and the project needed a `pyproject.toml` file for `uv sync` to work.
+
+1. Installed `uv` (Python Package Manager)
+   - Command: irm https://astral.sh/uv/install.ps1 | iex
+   - Purpose: Downloaded and installed `uv` from the official Astral installer. It was installed to C:\Users\lenovio\.local\bin.
+   - Output: Installation completed successfully.
+
+2. Added `uv` to PATH (Temporary, for Current Terminal Session)
+   - Command: $env:Path = "C:\Users\lenovio\.local\bin;$env:Path"
+   - Purpose: Made `uv` available in the current PowerShell session by updating the PATH environment variable.
+   - Note: This was done multiple times as new terminal sessions didn't inherit it.
+
+3. Attempted Initial `uv sync` (Failed Due to Missing `pyproject.toml`)
+   - Command: uv sync
+   - Purpose: Tried to synchronize dependencies, but failed because `uv` requires a `pyproject.toml` file (not just `requirements.txt`).
+   - Error: "No `pyproject.toml` found in current directory or any parent directory."
+
+4. Created `pyproject.toml` File
+   - Action: Created pyproject.toml in the workspace root.
+   - Content Added:
+     [project]
+     name = "genai-app"
+     version = "0.1.0"
+     description = "A FastAPI app for text summarization using Gemini"
+     dependencies = [
+     "fastapi==0.115.5",
+     "pydantic==2.9.2",
+     "google-genai==1.5.0",
+     "uvicorn==0.30.1",
+     "python-dotenv==1.0.0",
+     "huggingface_hub",
+     ]
+   - Purpose: Converted the requirements.txt dependencies into a pyproject.toml format that `uv` can use.
+
+5. Ran `uv sync` Successfully
+   - Command: uv sync
+   - Purpose: Synchronized the virtual environment with the dependencies listed in pyproject.toml.
+   - Output: Created a .venv virtual environment and installed 41 packages.
+
+6. Added `uv` to PATH Permanently
+   - Command: setx PATH "%PATH%;C:\Users\lenovio\.local\bin"
+   - Purpose: Added `uv`'s installation directory to the user's environment PATH.
+   - Output: "SUCCESS: Specified value was saved."
+
+7. Attempted to Run the Server with `uvicorn` (Failed Due to PATH Issues)
+   - Command: uv run uvicorn genai_app:app --reload
+   - Purpose: Tried to start the FastAPI server with auto-reload.
+   - Error: `uv` not recognized (PATH not set in new terminal session).
+   - Note: This was attempted twice.
+
+8. Ran the Server Using Full Path to `uv`
+   - Command: C:\Users\lenovio\.local\bin\uv.exe run uvicorn genai_app:app --reload
+   - Purpose: Started the FastAPI server using the full path to `uv`.
+   - Output: Server started on http://127.0.0.1:8000 with reload enabled.
+
+9. Ran the App Directly with Python
+   - Command: uv run python genai_app.py
+   - Purpose: Executed the genai_app.py script directly, which starts the server.
+   - Output: Server started on http://0.0.0.0:8000.
+
+Additional File Reads and Checks
+- Read requirements.txt: To understand the dependencies.
+- Read genai_app.py: To verify the app structure.
+- Read .env: To confirm the Gemini API key is set.
+- Listed Directory: To check the workspace structure.
+
+Key Notes
+- The app uses the Gemini API, so ensure your .env file has a valid GEMINI_API_KEY.
+- The server is now running and accessible at http://127.0.0.1:8000 or http://0.0.0.0:8000.
+- `uv` is now installed and in your PATH for future use.
+- If you restart VS Code or open a new terminal, `uv` should work without the full path.
