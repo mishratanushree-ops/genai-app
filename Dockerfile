@@ -13,4 +13,6 @@ COPY genai_app.py .
 
 EXPOSE 8000
 
-CMD ["uvicorn", "genai_app:app", "--host", "0.0.0.0", "--port", "8000"]
+#CMD ["uvicorn", "genai_app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["sh", "-c", "uvicorn genai_app:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "uvicorn genai_app:app --host 0.0.0.0 --port ${PORT:-8000}"]
